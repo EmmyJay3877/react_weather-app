@@ -23,8 +23,8 @@ const App = () => {
       toast.info('Fetching weather for ' + message)
       await getFormattedWeatherData({...query, units}).then(data=>{
         toast.success(`Successfully fetched weather for ${data.name}, ${data.country}`)
-        // console.log(data)
         setWeather(data);
+        // console.log(weather);
       })
     }
 
@@ -35,7 +35,13 @@ const App = () => {
 
   return (
     <div className='flex justify-center'>
-    <img className='absolute inset-0 h-full w-full bg-center' src={ weather.temp <= threshold ? cloudy : clear } alt="" />
+      {
+        weather === null || weather === undefined
+        ?
+        <img className='absolute inset-0 h-full w-full bg-center' src={ clear } alt="" />
+        :
+        <img className='absolute inset-0 h-full w-full bg-center' src={ weather.temp <= threshold ? cloudy : clear } alt="" />
+      }
     <div className="absolute inset-0 mx-auto md:w-fit sm:w-fit mt-12 bg-gray-900 bg-opacity-50 bg-center bg-cover md:px-20 sm:px-12 py-5
     h-fit shadow-xl shadow-gray-400">
       <TopButtons setQuery={setQuery} />
